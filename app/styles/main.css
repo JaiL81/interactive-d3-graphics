@@ -82,8 +82,8 @@ body {
   }
 }
 
-svg {
-  border: 1px solid #ccc;
+.population {
+
 }
 
 .axis line,
@@ -98,11 +98,10 @@ svg {
 
 
 .bar {
-  fill-opacity: 0.5;
 }
 .bar.left {
-  fill: steelblue;
+  fill: orange;
 }
 .bar.right {
-  fill: firebrick;
+  fill: orange;
 }

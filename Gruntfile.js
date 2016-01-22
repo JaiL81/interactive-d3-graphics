@@ -244,7 +244,7 @@ module.exports = function (grunt) {
         flow: {
           html: {
             steps: {
-              js: ['concat', 'uglifyjs'],
+              js: ['concat'],
               css: ['cssmin']
             },
             post: {}
@@ -339,7 +339,7 @@ module.exports = function (grunt) {
       dist: {
         options: {
           module: 'interactiveD3App',
-          htmlmin: '<%= htmlmin.dist.options %>',
+         // htmlmin: '<%= htmlmin.dist.options %>',
           usemin: 'scripts/scripts.js'
         },
         cwd: '<%= yeoman.app %>',
@@ -380,7 +380,8 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '*.html',
             'images/{,*/}*.{webp}',
-            'styles/fonts/{,*/}*.*'
+            'styles/fonts/{,*/}*.*',
+            'json/*.*'
           ]
         }, {
           expand: true,
@@ -463,7 +464,6 @@ module.exports = function (grunt) {
     'copy:dist',
     'cdnify',
     'cssmin',
-    'uglify',
     'filerev',
     'usemin',
     'htmlmin'

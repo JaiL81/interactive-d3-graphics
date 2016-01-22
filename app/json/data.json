@@ -3,80 +3,51 @@
     "year": "1950",
     "workersPerDependent": 37.6,
     "incomePerPerson": 22.236,
-    "malePopulation": [
+    "population": [
       {
-        "label": "0-9",
-        "value": "20"
+        "group": "0-9",
+        "male": 10,
+        "female": 12
       },
       {
-        "label": "10-19",
-        "value": "22"
+        "group": "10-19",
+        "male": 12,
+        "female": 14
       },
       {
-        "label": "20-29",
-        "value": "24"
+        "group": "20-29",
+        "male": 14,
+        "female": 16
       },
       {
-        "label": "30-39",
-        "value": "28"
+        "group": "30-39",
+        "male": 15,
+        "female": 18
       },
       {
-        "label": "40-49",
-        "value": "23"
+        "group": "40-49",
+        "male": 15,
+        "female": 12
       },
       {
-        "label": "50-59",
-        "value": "24"
+        "group": "50-59",
+        "male": 14,
+        "female": 18
       },
       {
-        "label": "60-69",
-        "value": "27"
+        "group": "60-69",
+        "male": 13,
+        "female": 12
       },
       {
-        "label": "70-79",
-        "value": "21"
+        "group": "70-79",
+        "male": 11,
+        "female": 12
       },
       {
-        "label": "+80",
-        "value": "10"
-      }
-    ],
-    "femalePopulation": [
-      {
-        "label": "0-9",
-        "value": "20"
-      },
-      {
-        "label": "10-19",
-        "value": "22"
-      },
-      {
-        "label": "20-29",
-        "value": "24"
-      },
-      {
-        "label": "30-39",
-        "value": "28"
-      },
-      {
-        "label": "40-49",
-        "value": "23"
-      },
-      {
-        "label": "50-59",
-        "value": "24"
-      },
-      {
-        "label": "60-69",
-        "value": "27"
-      },
-      {
-        "label": "70-79",
-        "value": "21"
-      },
-      {
-        "label": "+80",
-        "value": "10"
+        "group": "80+",
+        "male": 10,
+        "female": 11
       }
     ]
   }
