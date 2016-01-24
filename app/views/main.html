@@ -1,9 +1,11 @@
 <div class="jumbotron">
+  <nvd3 options="vm.options" data="vm.multiLineData" style="float: left"></nvd3>
+
   <svg class="population"></svg>
+  <button value="Play" ng-click="vm.updatePopulationChart()">Play</button>
 </div>
 
 <div class="row marketing">
 
-  <nvd3 options="main.options" data="main.data" on-ready="main.callback"></nvd3>
 
 </div>
