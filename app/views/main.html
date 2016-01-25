@@ -1,11 +1,18 @@
+<div>
+  <h5>Workers per dependent: {{vm.currentElement.workersPerDependent}}</h5>
+  <h5>Income per person: {{vm.currentElement.incomePerPerson}}</h5>
+</div>
+
 <div class="jumbotron">
   <nvd3 options="vm.options" data="vm.multiLineData" style="float: left"></nvd3>
 
   <svg class="population"></svg>
   <button value="Play" ng-click="vm.updatePopulationChart()">Play</button>
 </div>
-
-<div class="row marketing">
-
+<div style="width: 50%">
+  <input type="range" style="width: 100%" min="1950" max="2050" ng-model="vm.currentYear" ng-change="vm.updatePopulationChart()"/>
+</div>
+<div class="row marketing" ng-class="{highlighted: vm.currentElement.comment.highlight}">
+  <h1>{{vm.currentElement.comment.text}}</h1>
 
 </div>

@@ -109,3 +109,11 @@ body {
 .nv-axis{
   display: none;
 }
+
+.highlighted {
+  background-color: orange;
+}
+
+.dashed {
+  stroke-dasharray: 2;
+}

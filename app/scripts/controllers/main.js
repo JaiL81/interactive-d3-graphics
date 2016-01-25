@@ -14,6 +14,7 @@ angular.module('interactiveD3App')
     $http.get("../../json/data.json").then(function (response) {
       vm.data = response.data;
       vm.currentYear = vm.data[0].year;
+      vm.currentElement = vm.data[0];
 
       buildPopulationGraph(response.data[0].population);
 
@@ -30,7 +31,11 @@ angular.module('interactiveD3App')
             left: 70
           },
           color: d3.scale.category10().range(),
-          useInteractiveGuideline: true,
+          useInteractiveGuideline: false,
+          showLegend: false,
+          tooltip: { enabled: false },
+          useVoronoi: false,
+          interpolate: 'basis',
           duration: 500,
           xAxis: {
             tickFormat: function(d){
@@ -57,7 +62,8 @@ angular.module('interactiveD3App')
           yAxis: 1,
           values: _.map(vm.data, function (d) {
             return {x: d.year, y: d.workersPerDependent};
-          })
+          }),
+          color: 'orange'
         },
         {
           key: 'Income per person',
@@ -65,16 +71,14 @@ angular.module('interactiveD3App')
           yAxis: 2,
           values: _.map(vm.data, function (d) {
             return {x: d.year, y: d.incomePerPerson};
-          })
+          }),
+          classed: 'dashed',
+          color: 'orange'
         }
       ];
-
-
-        console.log(_.map(vm.data, function (d) {
-          return {x: d.year, y: d.workersPerDependent};
-        }))
-
     });
+
+
     // SET UP DIMENSIONS
     //    var w = parseInt(d3.select(".population").attr("width")),
     //    h = parseInt(d3.select(".population").attr("height"));
@@ -112,9 +116,10 @@ angular.module('interactiveD3App')
 
     vm.updatePopulationChart = function () {
       vm.currentYear++;
-      var population = _.find(vm.data, {year: vm.currentYear}).population;
+      vm.currentElement = _.find(vm.data, {year: vm.currentYear});
+        var population = vm.currentElement.population;
       var leftBarGroup = d3.select('svg').select('#leftGroup').selectAll('.bar.left')
-        .data(population);
+        .data(population, function (d) { return d.group});
       var rightBarGroup = d3.select('svg').select('#rightGroup');
 
 
