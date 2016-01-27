@@ -8,8 +8,9 @@
  * Controller of the interactiveD3App
  */
 angular.module('interactiveD3App')
-  .controller('MainCtrl', function ($http) {
+  .controller('MainCtrl', function ($http, $interval) {
     var vm = this;
+    vm.isPlaying = false;
 
     $http.get("../../json/data.json").then(function (response) {
       vm.data = response.data;
@@ -103,6 +104,44 @@ angular.module('interactiveD3App')
     var totalPopulation, percentage;
 
 
+    vm.pause = function () {
+      stopPlayer();
+    };
+
+    vm.play = function () {
+      if (angular.isDefined(vm.timer)) return;
+
+      vm.isPlaying = true;
+
+      vm.timer = $interval(function(){
+        if (vm.currentYear < _.last(vm.data).year) {
+          updateBarChart();
+        } else {
+          stopPlayer();
+        }
+      }, 1000);
+
+      /*while (vm.isPlaying && vm.currentYear <= _.last(vm.data).year) {
+        vm.currentYear++;
+        vm.currentElement = _.find(vm.data, {year: vm.currentYear});
+        $interval(updateBarChart, 1000);
+      }*/
+    };
+
+    vm.stopAndUpdate = function () {
+      stopPlayer();
+      updateBarChart();
+    };
+
+    function stopPlayer() {
+      vm.isPlaying = false;
+
+      if (angular.isDefined(vm.timer)) {
+        $interval.cancel(vm.timer);
+        vm.timer = undefined;
+      }
+    }
+
     function calculatePercentage(data) {
       totalPopulation = d3.sum(data, function (d) {
         return d.male + d.female;
@@ -113,25 +152,27 @@ angular.module('interactiveD3App')
       };
     }
 
-
-    vm.updatePopulationChart = function () {
+    function updateBarChart(){
       vm.currentYear++;
       vm.currentElement = _.find(vm.data, {year: vm.currentYear});
-        var population = vm.currentElement.population;
-      var leftBarGroup = d3.select('svg').select('#leftGroup').selectAll('.bar.left')
-        .data(population, function (d) { return d.group});
+      //rightBarGroup.exit().remove();
+      var population = vm.currentElement.population;
+      var leftBarGroup = d3.select('svg').select('#leftGroup').selectAll('rect')
+        .data(population);
+
+
+      //.data(population, function (d) { return d.group});
       var rightBarGroup = d3.select('svg').select('#rightGroup');
-
-
       var scales = setUpScales(population);
       var yScale = scales.yScale;
-      var xScale = scales.xScale;
 
+      var xScale = scales.xScale;
       //drawGroupBars(leftBarGroup, population, scales.yScale, scales.xScale, rightBarGroup);
+      // leftBarGroup.exit().remove();
       leftBarGroup
-        .enter().append('rect')
-        .attr('class', 'bar left')
-        .attr('x', 0)
+      // .enter().append('rect')
+      //.attr('class', 'bar left')
+      //.attr('x', 0)
         .attr('y', function (d) {
           return yScale(d.group);
         })
@@ -139,27 +180,24 @@ angular.module('interactiveD3App')
           return xScale(percentage(d.male));
         })
         .attr('height', yScale.rangeBand());
-
       /*rightBarGroup.selectAll('.bar.right')
-        .data(population)
-        .enter().append('rect')
-        .attr('class', 'bar right')
-        .attr('x', 0)
-        .attr('y', function (d) {
-          return yScale(d.group);
-        })
-        .attr('width', function (d) {
-          return xScale(percentage(d.female));
-        })
-        .attr('height', yScale.rangeBand());
-*/
-     // leftBarGroup.exit().remove();
-      //rightBarGroup.exit().remove();
-    };
+       .data(population)
+       .enter().append('rect')
+       .attr('class', 'bar right')
+       .attr('x', 0)
+       .attr('y', function (d) {
+       return yScale(d.group);
+       })
+       .attr('width', function (d) {
+       return xScale(percentage(d.female));
+       })
+       .attr('height', yScale.rangeBand());
+       */
+    }
 
     function drawGroupBars(leftBarGroup, data, yScale, xScale, rightBarGroup) {
       leftBarGroup.selectAll('.bar.left')
-        .data(data)
+        .data(data, function (d) { return d.group;})
         .enter().append('rect')
         .attr('class', 'bar left')
         .attr('x', 0)

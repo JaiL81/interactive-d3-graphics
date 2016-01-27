@@ -4,15 +4,17 @@
 </div>
 
 <div class="jumbotron">
+  <div class="curtain"></div>
   <nvd3 options="vm.options" data="vm.multiLineData" style="float: left"></nvd3>
 
   <svg class="population"></svg>
-  <!--<button value="Play" ng-click="vm.updatePopulationChart()">Play</button>-->
 </div>
 <div style="width: 50%">
-  <input type="range" style="width: 100%" min="1950" max="2050" ng-model="vm.currentYear" ng-change="vm.updatePopulationChart()"/>
+  <input type="range" style="width: 100%" min="1950" max="2049" ng-model="vm.currentYear" ng-change="vm.stopAndUpdate()"/>
 </div>
-<div class="row marketing" ng-class="{highlighted: vm.currentElement.comment.highlight}">
-  <h1>{{vm.currentElement.comment.text}}</h1>
+<div class="row marketing">
+  <button ng-if="!vm.isPlaying" ng-click="vm.play()">Play</button>
+  <button ng-if="vm.isPlaying" ng-click="vm.pause()">Pause</button>
+  <h1 ng-class="{highlighted: vm.currentElement.comment.highlight}">{{vm.currentElement.comment.text}}</h1>
 
 </div>
